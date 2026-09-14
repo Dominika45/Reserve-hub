@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Użytkownicy{% endblock %}
+
+{% block body %}
+<div style="max-width: 900px; margin: 40px auto; font-family: system-ui, sans-serif;">
+    <h1 style="margin-bottom: 20px;">Lista użytkowników</h1>
+    <table style="width: 100%; border-collapse: collapse; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
+        <thead>
+            <tr style="background: #2c3e50; color: white; text-align: left;">
+                <th style="padding: 12px 16px;">ID</th>
+                <th style="padding: 12px 16px;">Email</th>
+                <th style="padding: 12px 16px;">Imię</th>
+                <th style="padding: 12px 16px;">Nazwisko</th>
+                <th style="padding: 12px 16px;">Role</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for user in users %}
+            <tr style="border-bottom: 1px solid #eee;">
+                <td style="padding: 10px 16px;">{{ user.id }}</td>
+                <td style="padding: 10px 16px;">{{ user.email }}</td>
+                <td style="padding: 10px 16px;">{{ user.firstName }}</td>
+                <td style="padding: 10px 16px;">{{ user.lastName }}</td>
+                <td style="padding: 10px 16px;">
+                    {% for role in user.roles %}
+                        <span style="background: #ecf0f1; padding: 2px 8px; border-radius: 4px; font-size: 12px; margin-right: 4px;">{{ role }}</span>
+                    {% endfor %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
