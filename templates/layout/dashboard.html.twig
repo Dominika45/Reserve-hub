@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div style="display: flex; min-height: 100vh; font-family: system-ui, sans-serif;">
+
+    <aside style="width: 240px; background: #1e293b; color: white; padding: 24px 0; flex-shrink: 0;">
+        <div style="padding: 0 24px 24px; font-size: 20px; font-weight: bold; border-bottom: 1px solid #334155; margin-bottom: 16px;">
+            ReserveHub
+        </div>
+
+        <nav style="display: flex; flex-direction: column;">
+            {% if is_granted('ROLE_ADMIN') %}
+                <a href="{{ path('app_admin_user') }}" style="padding: 12px 24px; color: #cbd5e1; text-decoration: none;">
+                    Użytkownicy
+                </a>
+            {% else %}
+                <a href="{{ path('app_resource_index') }}" style="padding: 12px 24px; color: #cbd5e1; text-decoration: none;">
+                    Lista zasobów
+                </a>
+            {% endif %}
+
+            <a href="{{ path('app_logout') }}" style="padding: 12px 24px; color: #cbd5e1; text-decoration: none; margin-top: auto;">
+                Wyloguj
+            </a>
+        </nav>
+    </aside>
+
+    <main style="flex: 1; padding: 32px; background: #f8fafc;">
+        {% block content %}{% endblock %}
+    </main>
+
+</div>
+{% endblock %}

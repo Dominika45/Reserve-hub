@@ -10,7 +10,7 @@ use Symfony\Component\Routing\Attribute\Route;
 final class AdminUserController extends AbstractController
 {
     #[Route('/admin/users', name: 'app_admin_user')]
-    public function index(userRepository $userRepository): Response
+    public function index(UserRepository $userRepository): Response
     {
         $users = $userRepository->findAll();
         return $this->render('admin_user/index.html.twig', [
