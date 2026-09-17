@@ -26,7 +26,7 @@ class LoginSuccessSubscriber implements EventSubscriberInterface
         $user = $event->getUser();
 
         if (in_array('ROLE_ADMIN', $user->getRoles(), true)) {
-            $url = $this->urlGenerator->generate('app_admin_user');
+            $url = $this->urlGenerator->generate('app_admin_user_crud_index');
         } else {
             $url = $this->urlGenerator->generate('app_resource_index');
         }

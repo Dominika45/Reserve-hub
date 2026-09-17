@@ -1,43 +1,49 @@
-{% extends 'base.html.twig' %}
+{% extends 'layout/dashboard.html.twig' %}
 
-{% block title %}User index{% endblock %}
+{% block title %}Użytkownicy{% endblock %}
 
-{% block body %}
-    <h1>User index</h1>
-
-    <table class="table">
+{% block content %}
+<div style="max-width: 1000px; margin: 40px auto; font-family: system-ui, sans-serif;">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+        <h1>Lista użytkowników</h1>
+        <a href="{{ path('app_admin_user_crud_new') }}" style="background: #2c3e50; color: white; padding: 8px 16px; border-radius: 4px; text-decoration: none;">
+            + Dodaj użytkownika
+        </a>
+    </div>
+    <table style="width: 100%; border-collapse: collapse; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
         <thead>
-            <tr>
-                <th>Id</th>
-                <th>Email</th>
-                <th>Roles</th>
-                <th>Password</th>
-                <th>FirstName</th>
-                <th>LastName</th>
-                <th>actions</th>
+            <tr style="background: #2c3e50; color: white; text-align: left;">
+                <th style="padding: 12px 16px;">ID</th>
+                <th style="padding: 12px 16px;">Email</th>
+                <th style="padding: 12px 16px;">Imię</th>
+                <th style="padding: 12px 16px;">Nazwisko</th>
+                <th style="padding: 12px 16px;">Rola</th>
+                <th style="padding: 12px 16px;">Akcje</th>
             </tr>
         </thead>
         <tbody>
-        {% for user in users %}
-            <tr>
-                <td>{{ user.id }}</td>
-                <td>{{ user.email }}</td>
-                <td>{{ user.roles ? user.roles|json_encode : '' }}</td>
-                <td>{{ user.password }}</td>
-                <td>{{ user.firstName }}</td>
-                <td>{{ user.lastName }}</td>
-                <td>
-                    <a href="{{ path('app_admin_user_crud_show', {'id': user.id}) }}">show</a>
-                    <a href="{{ path('app_admin_user_crud_edit', {'id': user.id}) }}">edit</a>
+            {% for user in users %}
+            <tr style="border-bottom: 1px solid #eee;">
+                <td style="padding: 10px 16px;">{{ user.id }}</td>
+                <td style="padding: 10px 16px;">{{ user.email }}</td>
+                <td style="padding: 10px 16px;">{{ user.firstName }}</td>
+                <td style="padding: 10px 16px;">{{ user.lastName }}</td>
+                <td style="padding: 10px 16px;">
+                    {% for role in user.roles %}
+                        <span style="background: #ecf0f1; padding: 2px 8px; border-radius: 4px; font-size: 12px; margin-right: 4px;">{{ role }}</span>
+                    {% endfor %}
+                </td>
+                <td style="padding: 10px 16px;">
+                    <a href="{{ path('app_admin_user_crud_edit', {id: user.id}) }}">Edytuj</a>
+                    &nbsp;|&nbsp;
+                    <form method="post" action="{{ path('app_admin_user_crud_delete', {id: user.id}) }}" style="display:inline" onsubmit="return confirm('Na pewno usunąć?');">
+                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ user.id) }}">
+                        <button type="submit" style="background:none; border:none; color:red; cursor:pointer; padding:0; text-decoration: underline;">Usuń</button>
+                    </form>
                 </td>
             </tr>
-        {% else %}
-            <tr>
-                <td colspan="7">no records found</td>
-            </tr>
-        {% endfor %}
+            {% endfor %}
         </tbody>
     </table>
-
-    <a href="{{ path('app_admin_user_crud_new') }}">Create new</a>
+</div>
 {% endblock %}

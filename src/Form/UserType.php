@@ -7,6 +7,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 
 class UserType extends AbstractType
 {
@@ -25,12 +26,19 @@ class UserType extends AbstractType
             ->add('firstName')
             ->add('lastName')
         ;
+
+        if ($options['is_new']) {
+            $builder->add('plainPassword', PasswordType::class, [
+                'mapped' =>false,
+            ]);
+        }
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'data_class' => User::class,
+            'is_new' =>false,
         ]);
     }
 }

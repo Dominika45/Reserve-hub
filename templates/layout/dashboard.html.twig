@@ -10,7 +10,7 @@
 
         <nav style="display: flex; flex-direction: column;">
             {% if is_granted('ROLE_ADMIN') %}
-                <a href="{{ path('app_admin_user') }}" style="padding: 12px 24px; color: #cbd5e1; text-decoration: none;">
+                <a href="{{ path('app_admin_user_crud_index') }}" style="padding: 12px 24px; color: #cbd5e1; text-decoration: none;">
                     Użytkownicy
                 </a>
             {% else %}
