@@ -1,0 +1,11 @@
+{% extends 'layout/dashboard.html.twig' %}
+
+{% block title %}Dodaj przedmiot{% endblock %}
+
+{% block content %}
+
+    <a class="btn" href="{{ path('app_item_index') }}">Powrót do listy</a>
+
+    {{ include('item/_form.html.twig') }}
+
+{% endblock %}
