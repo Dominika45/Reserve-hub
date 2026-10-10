@@ -57,6 +57,7 @@ final class ItemController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $item->updateTimestamp();
             $entityManager->flush();
 
             return $this->redirectToRoute('app_item_index', [], Response::HTTP_SEE_OTHER);

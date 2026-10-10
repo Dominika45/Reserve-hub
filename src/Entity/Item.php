@@ -3,13 +3,21 @@
 namespace App\Entity;
 
 use App\Repository\ItemRepository;
-use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 use App\Enum\ItemStatus;
 
 #[ORM\Entity(repositoryClass: ItemRepository::class)]
 class Item
 {
+
+    public function __construct()
+    {
+        $now = new \DateTimeImmutable();
+
+        $this->createdAt = $now;
+        $this->updatedAt = $now;
+    }
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -25,10 +33,10 @@ class Item
     private ItemStatus $status = ItemStatus::AVAILABLE;
 
     #[ORM\Column]
-    private ?DateTime $createdAt = null;
+    private ?\DateTimeImmutable $createdAt = null;
 
     #[ORM\Column]
-    private ?DateTime $updatedAt = null;
+    private ?\DateTimeImmutable $updatedAt = null;
 
     public function getId(): ?int
     {
@@ -68,13 +76,19 @@ class Item
         return $this;
     }
 
-    public function getCreatedAt(): ?DateTime
+    public function getCreatedAt(): ?\DateTimeImmutable
     {
         return $this->createdAt;
     }
 
-    public function getUpdatedAt(): ?DateTime
+    public function updateTimestamp(): void
+    {
+        $this->updatedAt = new \DateTimeImmutable();
+    }
+
+    public function getUpdatedAt(): ?\DateTimeImmutable
     {
         return $this->updatedAt;
     }
+
 }

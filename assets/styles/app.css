@@ -108,3 +108,11 @@ button {
 button:hover {
     background: #4338ca;
 }
+
+.back-button {
+    margin-bottom: 20px;
+}
+
+form .btn {
+    float: right;
+}
