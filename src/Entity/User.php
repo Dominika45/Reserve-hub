@@ -39,17 +39,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $lastName = null;
 
-    /**
-     * @var Collection<int, Resource>
-     */
-    #[ORM\OneToMany(targetEntity: Resource::class, mappedBy: 'owner')]
-    private Collection $resources;
-
-    public function __construct()
-    {
-        $this->resources = new ArrayCollection();
-    }
-
     public function getId(): ?int
     {
         return $this->id;
@@ -155,33 +144,4 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    /**
-     * @return Collection<int, Resource>
-     */
-    public function getResources(): Collection
-    {
-        return $this->resources;
-    }
-
-    public function addResource(Resource $resource): static
-    {
-        if (!$this->resources->contains($resource)) {
-            $this->resources->add($resource);
-            $resource->setOwner($this);
-        }
-
-        return $this;
-    }
-
-    public function removeResource(Resource $resource): static
-    {
-        if ($this->resources->removeElement($resource)) {
-            // set the owning side to null (unless already changed)
-            if ($resource->getOwner() === $this) {
-                $resource->setOwner(null);
-            }
-        }
-
-        return $this;
-    }
 }

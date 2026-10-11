@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Item;
+use App\Entity\User;
 use App\Form\ItemType;
 use App\Repository\ItemRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -19,13 +20,21 @@ final class ItemController extends AbstractController
     {
         return $this->render('item/index.html.twig', [
             'items' => $itemRepository->findAll(),
+            'currentUser' => $this->getUser(),
         ]);
     }
 
     #[Route('/new', name: 'app_item_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
+        $user = $this->getUser();
+        if (!$user instanceof User) {
+            throw $this->createAccessDeniedException();
+        }
+
         $item = new Item();
+        $item->setOwner($user);
+
         $form = $this->createForm(ItemType::class, $item);
         $form->handleRequest($request);
 

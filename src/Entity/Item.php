@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\ItemRepository;
 use Doctrine\ORM\Mapping as ORM;
 use App\Enum\ItemStatus;
+use App\Entity\User;
 
 #[ORM\Entity(repositoryClass: ItemRepository::class)]
 class Item
@@ -25,6 +26,10 @@ class Item
 
     #[ORM\Column]
     private ?string $name = null;
+
+    #[ORM\ManyToOne(inversedBy: 'items')]
+    #[ORM\JoinColumn(name: 'owner', referencedColumnName: 'id', nullable: false)]
+    private ?User $owner = null;
 
     #[ORM\Column]
     private ?string $description = null;
@@ -51,6 +56,18 @@ class Item
     public function setName(string $name): static
     {
         $this->name = $name;
+        return $this;
+    }
+
+    public function getOwner(): ?User
+    {
+        return $this->owner;
+    }
+
+    public function setOwner(User $owner): static
+    {
+        $this->owner = $owner;
+
         return $this;
     }
 
