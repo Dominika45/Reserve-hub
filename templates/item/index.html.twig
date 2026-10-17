@@ -27,16 +27,18 @@
                 <td style="padding: 10px 16px;">{{ item.name }}</td>
                 <td style="padding: 10px 16px;">{{ item.status.value }}</td>
                 <td style="padding: 10px 16px;">{{ item.createdAt|date('Y-m-d H:i:s') }}</td>
-                {% if currentUser and item.owner and currentUser.id == item.owner.id %}
-                    <td style="padding: 10px 16px;">
+                <td style="padding: 10px 16px;">
+                    <a href="{{ path('app_reservation_new', {id: item.id}) }}">Zarezerwuj</a>
+                    {% if currentUser and item.owner and currentUser.id == item.owner.id %}
+                        &nbsp;|&nbsp;
                         <a href="{{ path('app_item_edit', {id: item.id}) }}">Edytuj</a>
                         &nbsp;|&nbsp;
                         <form method="post" action="{{ path('app_item_delete', {id: item.id}) }}" style="display:inline" onsubmit="return confirm('Na pewno usunąć?');">
                             <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ item.id) }}">
                             <button type="submit" style="background:none; border:none; color:red; cursor:pointer; padding:0; text-decoration: underline;">Usuń</button>
                         </form>
-                    </td>
-                {% endif %}
+                    {% endif %}
+                </td>
             </tr>
             {% endfor %}
         </tbody>

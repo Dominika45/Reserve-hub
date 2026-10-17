@@ -1,0 +1,7 @@
+form:
+  firstName: Imię
+  lastName: Nazwisko
+  password: Hasło
+  role: Rola
+  email: E-mail
+  

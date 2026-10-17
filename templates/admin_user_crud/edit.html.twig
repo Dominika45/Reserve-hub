@@ -1,13 +1,11 @@
-{% extends 'base.html.twig' %}
+{% extends 'layout/dashboard.html.twig' %}
 
-{% block title %}Edit User{% endblock %}
+{% block title %}Edycja Użytkownika{% endblock %}
 
-{% block body %}
-    <h1>Edit User</h1>
+{% block content %}
+
+    <a class="btn back-button" href="{{ path('app_admin_user_crud_index') }}">← Powrót do listy</a>
 
     {{ include('admin_user_crud/_form.html.twig', {'button_label': 'Update'}) }}
 
-    <a href="{{ path('app_admin_user_crud_index') }}">back to list</a>
-
-    {{ include('admin_user_crud/_delete_form.html.twig') }}
 {% endblock %}
